@@ -45,7 +45,7 @@ protected:
 
   // Encoder Step identifiers with direction
   static const byte STEP_CW = 1 << 4 ;   // High half byte +1: 0b00010000
-  static const byte STEP_CCW = -1 << 4;  // High half byte -1: 0b11110000
+  static const byte STEP_CCW = ((byte) -1) << 4;  // High half byte -1: 0b11110000
 
   // Masks to split a Combo into State and Step
   static const byte COMBO_STATE_MASK = 0b00001111;
@@ -66,4 +66,4 @@ protected:
   inline byte comboGetState(byte Combo) const __attribute__((always_inline));
 };
 
-#endif
+#endif  // _RENCODER_H_

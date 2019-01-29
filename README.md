@@ -1,0 +1,1 @@
+Arduino library to process rotary encoder signals and determine step events.

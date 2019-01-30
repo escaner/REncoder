@@ -30,7 +30,7 @@ class REncoder
 {
 public:
   REncoder();
-  int8_t update(bool A, bool B);
+  int8_t update(uint8_t A, uint8_t B);
 
 protected:
   // States for the state machine
@@ -61,9 +61,9 @@ protected:
   uint8_t State;
 
   // Methods
-  inline byte packCode(bool A, bool B) const __attribute__((always_inline));
-  inline int8_t comboGetStep(byte Combo) const __attribute__((always_inline));
-  inline byte comboGetState(byte Combo) const __attribute__((always_inline));
+  inline byte packCode(uint8_t A, uint8_t B) const;
+  inline int8_t comboGetStep(byte Combo) const;
+  inline byte comboGetState(byte Combo) const;
 };
 
 #endif  // _RENCODER_H_

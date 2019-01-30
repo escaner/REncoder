@@ -1,0 +1,4 @@
+{
+    "programmer": "AVRISP mkII",
+    "board": "arduino:avr:micro"
+}

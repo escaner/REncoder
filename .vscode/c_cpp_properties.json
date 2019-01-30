@@ -3,17 +3,15 @@
         {
             "name": "Linux",
             "includePath": [
+                "/usr/share/arduino/hardware/arduino/avr/**",
+                "/usr/share/arduino/hardware/arduino/avr/variants/micro",
                 "${workspaceFolder}/**",
-                "/usr/share/arduino/hardware/arduino/avr/cores/arduino/",
-                "/usr/share/arduino/hardware/arduino/avr/libraries/EEPROM/",
-                "/usr/share/arduino/hardware/arduino/avr/libraries/HID/",
-                "/usr/share/arduino/hardware/arduino/avr/libraries/SPI/",
-                "/usr/share/arduino/hardware/arduino/avr/libraries/SoftwareSerial/",
-                "/usr/share/arduino/hardware/arduino/avr/libraries/Wire/",
-                "/usr/share/arduino/hardware/arduino/avr/variants/micro/",
                 "/usr/avr/include/"
             ],
-            "defines": [],
+            "forcedInclude": [
+                "/usr/share/arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ],
+            "defines": [ "UBRRH"],
             "compilerPath": "/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",

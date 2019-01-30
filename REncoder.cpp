@@ -49,14 +49,14 @@ REncoder::REncoder()
  *   Updates the state machine with new encoder signals and returns whether
  *  a step has been completed.
  *   Parameters:
- *   * A: value of A pin signal
- *   * B: value of B pin signal
+ *   * A (HIGH, LOW): value of A pin signal
+ *   * B (HIGH, LOW): value of B pin signal
  *   Return:
  *   * 0: no step has been completed
  *   * 1: clockwise step has been completed
  *   * -1: counter clockwise step has been completed
  */
-int8_t REncoder::update(bool A, bool B)
+int8_t REncoder::update(uint8_t A, uint8_t B)
 {
   byte Combo;
 
@@ -75,13 +75,13 @@ int8_t REncoder::update(bool A, bool B)
  *   Given the bit values of A and B encoder signals, returns a Code
  *  containing both of them.
  *   Parameters:
- *   * A: bit value for A pin
- *   * B: bit value for B pin
+ *   * A (HIGH, LOW): bit value for A pin
+ *   * B (HIGH, LOW): bit value for B pin
  *   Return:
  *   * Byte with the encoded binary value of A and B in the following format:
- *     0b000000BA, where true is 1 and false is 0.
+ *     0b000000BA.
  */
-inline byte REncoder::packCode(bool A, bool B) const
+inline byte REncoder::packCode(uint8_t A, uint8_t B) const
 {
   // Packs with B as high bit and A as low bit
   return (B << 1) | A;

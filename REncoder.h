@@ -24,6 +24,10 @@
  *   Mid   00   00
  *   End   01   10
  *   Rest  11   11
+ * 
+ *   When an invalid code is detected, the state machine goes to an invalid
+ *  state until a Rest code is detected and syncs there. All codes are ignored
+ *  until then.
  */
 
 class REncoder
@@ -41,15 +45,19 @@ protected:
   static const uint8_t ST_MID_CCW = 4;
   static const uint8_t ST_END_CW = 5;
   static const uint8_t ST_END_CCW = 6;
-  static const uint8_t ST_COUNT = 7;
+  static const uint8_t ST_ERROR = 7;
+  static const uint8_t ST_COUNT = 8;
 
   // Encoder Step identifiers with direction
-  static const byte STEP_CW = 1 << 4 ;   // High half byte +1: 0b00010000
-  static const byte STEP_CCW = ((byte) -1) << 4;  // High half byte -1: 0b11110000
+  static const byte STEP_CW = 1 << 4;  // High half byte +1: 00010000
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Woverflow"
+  static const byte STEP_CCW = ((byte) -1) << 4;  // High half byte -1: 11110000
+  #pragma GCC diagnostic pop
 
   // Masks to split a Combo into State and Step
   static const byte COMBO_STATE_MASK = 0b00001111;
-  static const byte COMBO_STEP_MASK = STEP_CW | STEP_CCW;  // 0b11110000
+  static const byte COMBO_STEP_MASK = STEP_CW | STEP_CCW;  // 11110000
 
   // Number of combinations of the A & B lines
   static const uint8_t NUM_COMBO = 4;

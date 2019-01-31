@@ -41,7 +41,7 @@ const byte REncoder::ST_MACHINE[][NUM_COMBO] =
 REncoder::REncoder()
 {
   // Start State Machine from the encoder rest position
-  State = ST_REST;
+  _State = ST_REST;
 }
 
 
@@ -61,13 +61,13 @@ int8_t REncoder::update(uint8_t A, uint8_t B)
   byte Combo;
 
   // Get Combo for the next State
-  Combo = ST_MACHINE[State][packCode(A, B)];
+  Combo = ST_MACHINE[_State][_packCode(A, B)];
 
   // Extract State from Combo
-  State = comboGetState(Combo);
+  _State = _comboGetState(Combo);
 
   // Extract Step from Combo and return it
-  return comboGetStep(Combo);
+  return _comboGetStep(Combo);
 }
 
 
@@ -81,7 +81,7 @@ int8_t REncoder::update(uint8_t A, uint8_t B)
  *   * Byte with the encoded binary value of A and B in the following format:
  *     0b000000BA.
  */
-inline byte REncoder::packCode(uint8_t A, uint8_t B) const
+inline byte REncoder::_packCode(uint8_t A, uint8_t B) const
 {
   // Packs with B as high bit and A as low bit
   return (B << 1) | A;
@@ -97,7 +97,7 @@ inline byte REncoder::packCode(uint8_t A, uint8_t B) const
  *   *  0: No step registered in the Combo
  *   * +1: CW step registered in the Combo
  */
-inline int8_t REncoder::comboGetStep(byte Combo) const
+inline int8_t REncoder::_comboGetStep(byte Combo) const
 {
   return ((int8_t) Combo) >> 4;
 }
@@ -110,7 +110,7 @@ inline int8_t REncoder::comboGetStep(byte Combo) const
  *   Return:
  *   * ST_*: one of the valid defined States stored in the Combo.
  */
-inline byte REncoder::comboGetState(byte Combo) const
+inline byte REncoder::_comboGetState(byte Combo) const
 {
   return Combo & COMBO_STATE_MASK;
 }

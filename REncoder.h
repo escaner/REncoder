@@ -58,12 +58,12 @@ protected:
   static const byte ST_MACHINE[][NUM_COMBO];
 
   // Current state in the State Machine
-  uint8_t State;
+  uint8_t _State;
 
   // Methods
-  inline byte packCode(uint8_t A, uint8_t B) const;
-  inline int8_t comboGetStep(byte Combo) const;
-  inline byte comboGetState(byte Combo) const;
+  inline byte _packCode(uint8_t A, uint8_t B) const;
+  inline int8_t _comboGetStep(byte Combo) const;
+  inline byte _comboGetState(byte Combo) const;
 };
 
 #endif  // _RENCODER_H_

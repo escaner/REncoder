@@ -6,33 +6,33 @@
 #include "REncoder.h"
 
 
-const byte REncoder::ST_MACHINE[][NUM_COMBO] =
+const byte REncoder::_ST_MACHINE[][_NUM_COMBO] =
 {
   // BA: { 00, 01, 10, 11 }
-  // ST_REST: 11
-  // Invalid     CCW         CW          Same
-  {  ST_ERROR,   ST_BGN_CCW, ST_BGN_CW,  ST_REST },
-  // ST_BGN_CW: 10
-  // Fwd         Invalid     Same        Back
-  {  ST_MID_CW,  ST_ERROR,   ST_BGN_CW,  ST_REST },
-  // ST_BGN_CCW: 01
-  // Fwd         Same        Invalid     Back
-  {  ST_MID_CCW, ST_BGN_CCW, ST_ERROR,   ST_REST },
-  // ST_MID_CW: 00
-  // Same        Fwd         Back        Invalid
-  {  ST_MID_CW,  ST_END_CW,  ST_BGN_CW,  ST_ERROR },
-  // ST_MID_CCW: 00
-  // Same        Back        Fwd         Invalid
-  {  ST_MID_CCW, ST_BGN_CCW, ST_END_CCW, ST_ERROR },
-  // ST_END_CW: 01
-  // Back        Same        Invalid     Fwd & CW
-  {  ST_MID_CW,  ST_END_CW,  ST_ERROR,   ST_REST|STEP_CW },
-  // ST_END_CCW: 10
-  // Back        Invalid     Same        Fwd & CCW
-  {  ST_MID_CCW, ST_ERROR,   ST_REST,    ST_REST|STEP_CCW },
-  // ST_ERROR: come here when invalid state is detected
-  // Invalid     Invalid     Invalid     Sync at Rest
-  {  ST_ERROR,   ST_ERROR,   ST_ERROR,   ST_REST }
+  // _ST_REST: 11
+  // Invalid      CCW          CW           Same
+  {  _ST_ERROR,   _ST_BGN_CCW, _ST_BGN_CW,  _ST_REST },
+  // _ST_BGN_CW: 10
+  // Fwd          Invalid      Same         Back
+  {  _ST_MID_CW,  _ST_ERROR,   _ST_BGN_CW,  _ST_REST },
+  // _ST_BGN_CCW: 01
+  // Fwd          Same         Invalid      Back
+  {  _ST_MID_CCW,  _ST_BGN_CCW, _ST_ERROR,   _ST_REST },
+  // _ST_MID_CW: 00
+  // Same         Fwd          Back         Invalid
+  {  _ST_MID_CW,  _ST_END_CW,  _ST_BGN_CW,  _ST_ERROR },
+  // _ST_MID_CCW: 00
+  // Same         Back         Fwd          Invalid
+  {  _ST_MID_CCW, _ST_BGN_CCW, _ST_END_CCW, _ST_ERROR },
+  // _ST_END_CW: 01
+  // Back         Same         Invalid      Fwd & CW
+  {  _ST_MID_CW,  _ST_END_CW,  _ST_ERROR,   _ST_REST|_STEP_CW },
+  // _ST_END_CCW: 10
+  // Back         Invalid      Same         Fwd & CCW
+  {  _ST_MID_CCW, _ST_ERROR,   _ST_REST,    _ST_REST|_STEP_CCW },
+  // _ST_ERROR: come here when invalid state is detected
+  // Invalid      Invalid      Invalid      Sync at Rest
+  {  _ST_ERROR,   _ST_ERROR,   _ST_ERROR,   _ST_REST }
 };
 
 
@@ -44,7 +44,7 @@ const byte REncoder::ST_MACHINE[][NUM_COMBO] =
 REncoder::REncoder()
 {
   // Start State Machine from the encoder rest position
-  _State = ST_REST;
+  _State = _ST_REST;
 }
 
 
@@ -64,7 +64,7 @@ int8_t REncoder::update(uint8_t A, uint8_t B)
   byte Combo;
 
   // Get Combo for the next State
-  Combo = ST_MACHINE[_State][_packCode(A, B)];
+  Combo = _ST_MACHINE[_State][_packCode(A, B)];
 
   // Extract State from Combo
   _State = _comboGetState(Combo);
@@ -102,7 +102,7 @@ inline byte REncoder::_packCode(uint8_t A, uint8_t B) const
  */
 inline int8_t REncoder::_comboGetStep(byte Combo) const
 {
-  return ((int8_t) Combo) >> 4;
+  return ((int8_t) Combo) >> _COMBO_STEP_MASK_BIT;
 }
 
 
@@ -115,5 +115,5 @@ inline int8_t REncoder::_comboGetStep(byte Combo) const
  */
 inline byte REncoder::_comboGetState(byte Combo) const
 {
-  return Combo & COMBO_STATE_MASK;
+  return Combo & _COMBO_STATE_MASK;
 }

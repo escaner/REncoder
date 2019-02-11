@@ -42,32 +42,33 @@ public:
 
 protected:
   // States for the state machine
-  static const uint8_t ST_REST = 0;
-  static const uint8_t ST_BGN_CW = 1;
-  static const uint8_t ST_BGN_CCW = 2;
-  static const uint8_t ST_MID_CW = 3;
-  static const uint8_t ST_MID_CCW = 4;
-  static const uint8_t ST_END_CW = 5;
-  static const uint8_t ST_END_CCW = 6;
-  static const uint8_t ST_ERROR = 7;
-  static const uint8_t ST_COUNT = 8;
+  static const uint8_t _ST_REST = 0;
+  static const uint8_t _ST_BGN_CW = 1;
+  static const uint8_t _ST_BGN_CCW = 2;
+  static const uint8_t _ST_MID_CW = 3;
+  static const uint8_t _ST_MID_CCW = 4;
+  static const uint8_t _ST_END_CW = 5;
+  static const uint8_t _ST_END_CCW = 6;
+  static const uint8_t _ST_ERROR = 7;
+  // static const uint8_t _ST_COUNT = 8;
 
   // Encoder Step identifiers with direction
-  static const byte STEP_CW = 1 << 4;  // High half byte +1: 00010000
+  static const byte _STEP_CW = 1 << 4;  // High half byte +1: 00010000
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Woverflow"
-  static const byte STEP_CCW = ((byte) -1) << 4;  // High half byte -1: 11110000
+  static const byte _STEP_CCW = ((byte) -1) << 4; // High half byte -1: 11110000
   #pragma GCC diagnostic pop
 
-  // Masks to split a Combo into State and Step
-  static const byte COMBO_STATE_MASK = 0b00001111;
-  static const byte COMBO_STEP_MASK = STEP_CW | STEP_CCW;  // 11110000
+  // Masks to split a Combo into State
+  static const byte _COMBO_STATE_MASK = 0b00001111;
+  // Step Mask starts at bit 4: 11110000
+  static const uint8_t _COMBO_STEP_MASK_BIT = 4;  
 
   // Number of combinations of the A & B lines
-  static const uint8_t NUM_COMBO = 4;
+  static const uint8_t _NUM_COMBO = 4;
 
   // State machine
-  static const byte ST_MACHINE[][NUM_COMBO];
+  static const byte _ST_MACHINE[][_NUM_COMBO];
 
   // Current state in the State Machine
   uint8_t _State;

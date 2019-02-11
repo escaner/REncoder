@@ -25,8 +25,12 @@
  *   End   01   10
  *   Rest  11   11
  * 
- *   When an invalid code is detected, the state machine goes to an invalid
- *  state until a Rest code is detected and syncs there. All codes are ignored
+ *   The state of the encoder is followed by a state machine and updated
+ *  through the update() method. When a full path is found from Rest state
+ *  to the next State in one of the two directions, a Step event is returned.
+ *   When an invalid code is detected (we missed at lease one code),
+ *  the state machine goes to an Error state where it remains until a new
+ *  Rest code is detected and it syncs there. All other codes are ignored
  *  until then.
  */
 

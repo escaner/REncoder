@@ -73,8 +73,10 @@ uint8_t REncoderAsync::getEvent()
  *   Assumes that the delay has passed and returns an identifier with the next
  *  event to be sent, consuming it from the queue.
  *   Note that even if getEvent() has checked that there are pending events,
- *  we need to do an atomic update of the queue here (only _NumEvents is
- *  updated in the ISR), so interrupts are disabled for that piece of code.
+ *  an update() call from an ISR could have changed that, we need to do
+ *  an atomic check & update of the queue here (only _NumEvents is
+ *  updated in the ISR). Therefore, interrupts are disabled for that piece of
+ *  code.
  *   Parameters:
  *   * CurrentTime: current time as returned by millis() function
  *   Returns: REncoderAsync::EV_*

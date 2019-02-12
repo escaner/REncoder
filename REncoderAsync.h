@@ -7,7 +7,17 @@
 #ifndef _RENCODERASYNC_H_
 #define _RENCODERASYNC_H_
 
+/*
+ *   Define REA_MANAGE_INTERRUPTS if you need update() to disable interrupts
+ *  inside its code. Normally it is not needed unless interrupts are manually
+ *  enabled inside the ISR or update() is not called from an ISR.
+ *   E.g.:
+ *  #define REA_MANAGE_INTERRUPTS
+ */
+
+
 #include "REncoder.h"
+
 
 /*
  *   When dealing with computers and DirectX events, some time is required
@@ -21,7 +31,9 @@
  *  to the opposite side.
  *   A boolean _NextEventRelease keeps track of a pending release event even
  *  when _NumEvents changes sign (encoder direction).
- *   
+ *   Convention: clockwise (CW) events are positive in sign, while
+ *  counterclockwise (CCW) events are negative. This is also followed in
+ *  
  */
  
  // Inherit protected: disable external access to REncoder::update()
@@ -29,11 +41,11 @@ class REncoderAsync: protected REncoder
 {
 public:
   // Events that can be returned to be performed by caller
-  static const int8_t EV_LEFT_PRESS = -1;
-  static const int8_t EV_LEFT_RELEASE = -2;
+  static const int8_t EV_CCW_PRESS = -1;
+  static const int8_t EV_CCW_RELEASE = -2;
   static const int8_t EV_NONE = 0;
-  static const int8_t EV_RIGHT_PRESS = 1;
-  static const int8_t EV_RIGHT_RELEASE = 2;
+  static const int8_t EV_CW_PRESS = 1;
+  static const int8_t EV_CW_RELEASE = 2;
 
   static const uint8_t DEFAULT_DELAY = 32;
 
@@ -49,9 +61,53 @@ protected:
   const uint8_t _DelayReleasePress;
 
   // Event queue handling
-  int8_t _NumEvents;  // Number of pending press events; sign is direction
+  volatile int8_t _NumEvents;  // Number of pending press events; sign=direction
   int8_t _NextEventRelease;  // EV_* with a pending release event or EV_NONE
   unsigned long _LastEventTime;  // Time when last event was issued
+
+  // Protected methods
+  uint8_t _nextEvent(unsigned long CurrentTime);
 };
+
+
+/*
+ *   Updates the state machine with new encoder signals, keeps track of
+ *  the number of events to send and returns whether a step has been completed.
+ *   Effectively overwrites REncoder::update() by calling it and updating
+ *  _NumEvents member.
+ *   =NOTE= assumes to be called inside an ISR therefore it does not disable
+ *  interrutps or reenables them: they should already be disabled. If
+    if interrupts need to be disabled, define REA_MANAGE_INTERRUPTS macro.
+ *   Parameters:
+ *   * A (HIGH, LOW): value of A pin signal
+ *   * B (HIGH, LOW): value of B pin signal
+ *   Return:
+ *   * 0: no step has been completed
+ *   * 1: clockwise step has been completed
+ *   * -1: counter clockwise step has been completed
+ */
+inline int8_t REncoderAsync::update(uint8_t A, uint8_t B)
+{
+  int8_t Step;
+
+  // Update encoder status with superclass method
+  Step = REncoder::update(A, B);
+
+#ifdef REA_MANAGE_INTERRUPTS
+  // Protect _NumEvents update from interruts
+  byte Sreg = SREG;  // Save interrupt state
+  noInterrupts();
+#endif
+
+  // Keep count of the events in queue
+  _NumEvents += Step;
+
+#ifdef REA_MANAGE_INTERRUPTS
+  // Restore previous interrupt state
+  SREG = Sreg;
+#endif
+
+  return Step;
+}
 
 #endif  // _RENCODERASYNC_H_

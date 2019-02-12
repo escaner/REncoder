@@ -36,7 +36,8 @@
  *  
  */
  
- // Inherit protected: disable external access to REncoder::update()
+// Inherit from base class protected: disable external access to
+// REncoder::update()
 class REncoderAsync: protected REncoder
 {
 public:
@@ -77,7 +78,7 @@ protected:
  *  _NumEvents member.
  *   =NOTE= assumes to be called inside an ISR therefore it does not disable
  *  interrutps or reenables them: they should already be disabled. If
-    if interrupts need to be disabled, define REA_MANAGE_INTERRUPTS macro.
+ *  if interrupts need to be disabled, define REA_MANAGE_INTERRUPTS macro.
  *   Parameters:
  *   * A (HIGH, LOW): value of A pin signal
  *   * B (HIGH, LOW): value of B pin signal

@@ -15,6 +15,9 @@
  *  #define REA_MANAGE_INTERRUPTS
  */
 
+#ifdef REA_MANAGE_INTERRUPTS
+#  include <util/atomic.h>
+#endif
 
 #include "REncoder.h"
 
@@ -94,17 +97,16 @@ inline int8_t REncoderAsync::update(uint8_t A, uint8_t B)
   Step = REncoder::update(A, B);
 
 #ifdef REA_MANAGE_INTERRUPTS
-  // Protect _NumEvents update from interruts
-  byte Sreg = SREG;  // Save interrupt state
-  noInterrupts();
+  // Protect _NumEvents update from interruts and restore it after
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+  {
 #endif
 
   // Keep count of the events in queue
   _NumEvents += Step;
 
 #ifdef REA_MANAGE_INTERRUPTS
-  // Restore previous interrupt state
-  SREG = Sreg;
+  }
 #endif
 
   return Step;

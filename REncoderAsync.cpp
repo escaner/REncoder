@@ -104,7 +104,7 @@ uint8_t REncoderAsync::_nextEvent(unsigned long CurrentTime)
       // Positive events mean clockwise encoder direction
       if (_NumEvents > 0)
       {
-        // Register pending cw press event and update queue including next release
+        // Register pending cw press event and update queue and event time
         _NumEvents--;
         interrupts();
         Event = EV_CW_PRESS;

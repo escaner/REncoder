@@ -1,0 +1,32 @@
+#######################################
+# Syntax Coloring Map For REncoder
+#######################################
+
+#######################################
+# Classes, Datatypes (KEYWORD1)
+#######################################
+
+REncoder	KEYWORD1
+REncoderAsync	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+update	KEYWORD2
+getEvent	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+EV_CCW_PRESS	KEYWORD2
+EV_CCW_RELEASE	KEYWORD2
+EV_NONE	KEYWORD2
+EV_CW_PRESS	KEYWORD2
+EV_CW_RELEASE	KEYWORD2
+DEFAULT_DELAY	KEYWORD2

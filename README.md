@@ -1,5 +1,7 @@
-Arduino library to process rotary encoder signals and determine step events.
-Two classes are provided:
+https://github.com/escaner/REncoder
+
+REncoder is an Arduino library to process rotary encoder signals and determine
+step events. Two classes are provided:
 
 * REncoder has a method update() that keeps track of the encoder position,
   performs debouncing and returns a value indicating whether a step has been
@@ -14,3 +16,21 @@ Two classes are provided:
   It keeps track of the number of pending events. Note that while there are
   pending steps to one side, registered steps to the other side just discount
   and there will be no events for them.
+
+
+Copyright (C) 2019, Óscar Laborda
+
+This file is part of REncoder library.
+
+REncoder is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+REncoder is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with REncoder.  If not, see <https://www.gnu.org/licenses/>.

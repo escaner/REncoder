@@ -45,7 +45,7 @@ const byte REncoder::_ST_MACHINE[][_NUM_COMBO] =
   {  _ST_MID_CW,  _ST_END_CW,  _ST_ERROR,   _ST_REST|_STEP_CW },
   // _ST_END_CCW: 10
   // Back         Invalid      Same         Fwd & CCW
-  {  _ST_MID_CCW, _ST_ERROR,   _ST_REST,    _ST_REST|_STEP_CCW },
+  {  _ST_MID_CCW, _ST_ERROR,   _ST_END_CCW, _ST_REST|_STEP_CCW },
   // _ST_ERROR: come here when invalid state is detected
   // Invalid      Invalid      Invalid      Sync at Rest
   {  _ST_ERROR,   _ST_ERROR,   _ST_ERROR,   _ST_REST }

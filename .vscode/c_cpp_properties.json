@@ -3,20 +3,19 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/share/arduino/hardware/arduino/avr/**",
-                "/usr/share/arduino/tools/**",
-                "/usr/share/arduino/hardware/arduino/avr/variants/micro",
+                "${env:HOME}/.arduino15/packages/arduino/hardware/avr/**",
+                "${env:HOME}/.arduino15/packages/arduino/tools/avr-gcc/**",
                 "${workspaceFolder}/**",
                 "/usr/avr/sys-root/include/"
             ],
             "forcedInclude": [
-                "/usr/share/arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
+                "${env:HOME}/.arduino15/packages/arduino/hardware/avr1.8.3/cores/arduino/Arduino.h"
             ],
             "defines": [ "UBRRH" ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-x86"
         }
     ],
     "version": 4

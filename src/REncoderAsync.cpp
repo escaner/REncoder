@@ -59,7 +59,7 @@ REncoderAsync::REncoderAsync(uint8_t DelayPressRelease,
  *  the event itself.
  *   Returns: REncoderAsync::EV_*
  */
-uint8_t REncoderAsync::getEvent()
+int8_t REncoderAsync::getEvent()
 {
   unsigned long CurrentTime;
   uint8_t Delay;
@@ -98,7 +98,7 @@ uint8_t REncoderAsync::getEvent()
  *   Returns: REncoderAsync::EV_*
  *
  */
-uint8_t REncoderAsync::_nextEvent(unsigned long CurrentTime)
+int8_t REncoderAsync::_nextEvent(unsigned long CurrentTime)
 {
   int8_t Event;
 

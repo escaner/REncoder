@@ -73,7 +73,7 @@ public:
   REncoderAsync(uint8_t DelayPressRelease = DEFAULT_DELAY,
     uint8_t DelayReleasePress = DEFAULT_DELAY);
   inline int8_t update(uint8_t A, uint8_t B);  // Overwrite REncoder definition
-  uint8_t getEvent();
+  int8_t getEvent();
 
 protected:
   // Desired delay between two events
@@ -86,7 +86,7 @@ protected:
   unsigned long _LastEventTime;  // Time when last event was issued
 
   // Protected methods
-  uint8_t _nextEvent(unsigned long CurrentTime);
+  int8_t _nextEvent(unsigned long CurrentTime);
 };
 
 

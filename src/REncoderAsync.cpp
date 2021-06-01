@@ -92,7 +92,7 @@ int8_t REncoderAsync::getEvent()
  *  Parameters:
  *  * DelayMs: the new delay, in milliseconds
  */
-void REncoderAsync::setDelayPressRel(uint8_t DelayMs = DEFAULT_DELAY)
+void REncoderAsync::setDelayPressRel(uint8_t DelayMs)
 {
   _DelayPressRelease = DelayMs;
 }
@@ -103,7 +103,7 @@ void REncoderAsync::setDelayPressRel(uint8_t DelayMs = DEFAULT_DELAY)
  *  Parameters:
  *  * DelayMs: the new delay, in milliseconds
  */
-void REncoderAsync::setDelayRelPress(uint8_t DelayMs = DEFAULT_DELAY)
+void REncoderAsync::setDelayRelPress(uint8_t DelayMs)
 {
   _DelayReleasePress = DelayMs;
 }

@@ -74,11 +74,13 @@ public:
     uint8_t DelayReleasePress = DEFAULT_DELAY);
   inline int8_t update(uint8_t A, uint8_t B);  // Overwrite REncoder definition
   int8_t getEvent();
+  void setDelayPressRel(uint8_t DelayMs = DEFAULT_DELAY);
+  void setDelayRelPress(uint8_t DelayMs = DEFAULT_DELAY);
 
 protected:
-  // Desired delay between two events
-  const uint8_t _DelayPressRelease;
-  const uint8_t _DelayReleasePress;
+  // Desired delay between two events, in milliseconds
+  uint8_t _DelayPressRelease;
+  uint8_t _DelayReleasePress;
 
   // Event queue handling
   volatile int8_t _NumEvents;  // Number of pending press events; sign=direction

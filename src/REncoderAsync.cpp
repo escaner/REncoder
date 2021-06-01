@@ -29,7 +29,9 @@
  *  position.
  *   Parameters:
  *   * DelayPressRelease: desired minimum delay between a press and its release
+ *     in milliseconds
  *   * DelayReleasePress: desired minimum delay between a release and next press
+ *     in milliseconds
  */
 REncoderAsync::REncoderAsync(uint8_t DelayPressRelease,
   uint8_t DelayReleasePress):
@@ -82,6 +84,28 @@ int8_t REncoderAsync::getEvent()
 
   // No pending events or delay not fulfilled
   return EV_NONE;
+}
+
+
+/*
+ *   Sets a new delay between the press and next release event in milliseconds.
+ *  Parameters:
+ *  * DelayMs: the new delay, in milliseconds
+ */
+void REncoderAsync::setDelayPressRel(uint8_t DelayMs = DEFAULT_DELAY)
+{
+  _DelayPressRelease = DelayMs;
+}
+
+
+/*
+ *   Sets a new delay between the release and next press event in milliseconds.
+ *  Parameters:
+ *  * DelayMs: the new delay, in milliseconds
+ */
+void REncoderAsync::setDelayRelPress(uint8_t DelayMs = DEFAULT_DELAY)
+{
+  _DelayReleasePress = DelayMs;
 }
 
 
